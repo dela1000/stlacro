@@ -7,7 +7,7 @@ type MenuOption = {
   name: string;
 };
 
-const menuOptions: MenuOption[] = [{ name: 'home' }];
+const menuOptions: MenuOption[] = [{ name: 'home' }, { name: 'conduct' }];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -57,21 +57,11 @@ const Header = () => {
           {/* Web Menu */}
           <div className="hidden lg:flex gap-5 lg:gap-12 xl:gap-20 items-center">
             {menuOptions.map((option, idx) => {
-              if (menuOptions.includes(option)) {
-                return (
-                  <button key={idx} onClick={() => scrollTo(option.name)} className="capitalize cursor-pointer">
-                    {option.name}
-                  </button>
-                );
-              }
-
-              if (option.name !== 'contact') {
-                return (
-                  <Link key={idx} to={`/${option.name}`} className="capitalize">
-                    {option.name}
-                  </Link>
-                );
-              }
+              return (
+                <Link key={idx} to={`/${option.name}`} className="capitalize">
+                  {option.name}
+                </Link>
+              );
             })}
           </div>
           <div className="lg:flex hidden ml-14 min-w-24 justify-center">
@@ -81,24 +71,8 @@ const Header = () => {
       </div>
 
       {/* Dropdown Menu */}
-      <div className={`lg:hidden duration-500 ease-in-out bg-blue-900 ${isOpen ? 'h-28' : 'h-0'}`}>
+      <div className={`lg:hidden duration-500 ease-in-out bg-blue-900 ${isOpen ? 'h-42' : 'h-0'}`}>
         {menuOptions.map((option, idx) => {
-          if (menuOptions.includes(option)) {
-            return (
-              <button
-                key={idx}
-                onClick={() => {
-                  setIsOpen(false);
-                  setTimeout(() => {
-                    scrollTo(option.name);
-                  }, 500);
-                }}
-                className={`p-4 uppercase w-full text-left duration-500 ease-in-out ${isOpen ? 'opacity-100 delay-200 text-white' : 'opacity-0'}`}
-              >
-                {option.name}
-              </button>
-            );
-          }
           return (
             <Link
               key={idx}
