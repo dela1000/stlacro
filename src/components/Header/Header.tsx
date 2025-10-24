@@ -110,7 +110,7 @@ const Header = () => {
           className={`flex mr-5 flex-row justify-end gap-5 transition-opacity
             ${isOpen ? 'opacity-100 delay-400 duration-500' : 'opacity-0 duration-100'}`}
         >
-          <Socials />
+          <Socials darkMode />
         </div>
       </div>
     </div>
