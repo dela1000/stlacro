@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+@import 'slick-carousel/slick/slick-theme.css';
+@import 'slick-carousel/slick/slick.css';
+
+body {
+  background-color: white;
+  color: black;
+}
+
+@layer base {
+  :root {
+    -font-sans: 'DM Sans', sans-serif;
+    --font-serif: 'Manrope', 'Arial', sans-serif;
+  }
+}
+
+.slick-slider {
+  .slick-track {
+    display: flex;
+    align-items: center;
+  }
+
+  .slick-next,
+  .slick-prev {
+    width: 40px;
+    height: 40px;
+    padding-top: 3px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .slick-prev {
+    left: 15px;
+  }
+
+  .slick-next {
+    right: 15px;
+  }
+
+  .slick-next:hover,
+  .slick-prev:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}

@@ -1,14 +1,17 @@
-import 'src/App.css';
+import BackToTop from 'src/components/BackToTop';
 import Footer from 'src/components/Footer';
 import Header from 'src/components/Header';
-function App() {
+import Router from 'src/Router/';
+
+const App = () => {
   return (
-    <>
+    <div className="overflow-hidden">
+      <BackToTop />
       <Header />
-      <div className="flex h-full grow">HELLO</div>
+      <Router />
       <Footer />
-    </>
+    </div>
   );
-}
+};
 
 export default App;
