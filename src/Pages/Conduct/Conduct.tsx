@@ -70,7 +70,7 @@ const Conduct = () => {
           <div className="text-2xl text-bold pt-3 pb-1">Be Kind</div>
           <div>Stay away from comments about weight, size, or physical appearance.</div>
           <div>Be kind; discussing mechanics of an interaction is important, but choose your words carefully.</div>
-          <div className="text-2xl text-bold pt-3 pb-1">We are an Inclusive Group.</div>
+          <div className="text-2xl text-bold pt-3 pb-1">We are an Inclusive Group</div>
           <div>
             Bullying of any kind isn't allowed, and degrading comments about things like race, religion, culture, sexual orientation, gender or
             identity will not be tolerated.
