@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import Socials from 'src/components/Socials';
 import useWindowDimensions from 'src/hooks/useWindowDimensions';
 
-const menuOptions = [{ name: 'home' }];
+type MenuOption = {
+  name: string;
+};
+
+const menuOptions: MenuOption[] = [{ name: 'home' }];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
