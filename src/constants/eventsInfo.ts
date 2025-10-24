@@ -14,7 +14,7 @@ export const eventsInfo: Event[] = [
     address: '1419 Carroll St, St. Louis, MO 63104',
     lead: 'Joelle & Daniel',
     buttonText: 'Learn more',
-    buttonUrl: 'https://stlouis.climbsoill.com/classes-yoga-power-plant/',
+    buttonUrl: 'https://stlouis.climbsoill.com/classes-yoga-power-plant/#:~:text=ACRO%20YOGA',
   },
 ];
 
