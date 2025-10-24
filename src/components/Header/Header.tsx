@@ -19,18 +19,6 @@ const Header = () => {
     }
   }, [isOpen, width]);
 
-  const scrollTo = (hash: string) => {
-    const element = document.getElementById(hash);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop,
-        behavior: 'smooth',
-      });
-    } else {
-      window.location.href = `/#${hash}`;
-    }
-  };
-
   return (
     <div>
       <div className=" h-18 lg:h-28">
