@@ -13,7 +13,7 @@ export const eventsInfo: Event[] = [
     days: 'Tuesdays 6:30 PM - 8:00 PM',
     address: '1419 Carroll St, St. Louis, MO 63104',
     lead: 'Joelle & Daniel',
-    buttonText: 'Learn more about these classes',
+    buttonText: 'Learn more',
     buttonUrl: 'https://stlouis.climbsoill.com/classes-yoga-power-plant/',
   },
 ];
@@ -24,7 +24,7 @@ export const jamsInfo: Event[] = [
     days: 'Saturdays 2:00 PM - 5:00 PM',
     address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
-    buttonText: 'Learn more about these jams',
+    buttonText: 'Learn more',
     buttonUrl: 'https://facebook.com/groups/stlacroyogaclub/',
   },
   {
@@ -32,7 +32,7 @@ export const jamsInfo: Event[] = [
     days: 'Wednesdays 6:00 PM - 8:00 PM',
     address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
-    buttonText: 'Learn more about these jams',
+    buttonText: 'Learn more',
     buttonUrl: 'https://facebook.com/groups/stlacroyogaclub/',
   },
 ];
