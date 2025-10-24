@@ -16,6 +16,8 @@ export const createSettings = (imagesLength: number) => ({
       settings: {
         slidesToShow: 1,
         arrows: false,
+        variableWidth: false,
+        centerMode: false,
       },
     },
     {

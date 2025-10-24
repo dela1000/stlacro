@@ -18,4 +18,4 @@ export const instagram = insta;
 export const facebook = fb;
 
 // Section
-export const section: Section = { id: 'acro', title: 'STL Acro', images: acroImages };
+export const section: Section = { id: 'acro', images: acroImages };
