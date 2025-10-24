@@ -6,7 +6,7 @@ export const createSettings = (imagesLength: number) => ({
   cssEase: 'ease-in-out',
   slidesToScroll: 1,
   centerPadding: '10px',
-  slidesToShow: Math.min(imagesLength, 3),
+  slidesToShow: Math.min(imagesLength, 2),
   arrows: true,
   variableWidth: true,
   centerMode: true,
