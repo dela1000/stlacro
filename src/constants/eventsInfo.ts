@@ -21,7 +21,7 @@ export const eventsInfo: Event[] = [
 export const jamsInfo: Event[] = [
   {
     location: 'Tower Grove Park',
-    days: 'Saturdays 2:00 PM - 5:00 PM',
+    days: 'Sundays 2:00 PM - 5:00 PM',
     address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
     buttonText: 'Learn more',
