@@ -51,19 +51,7 @@ export const jamsInfo: Event[] = [
   },
 ];
 
-export const workshopsInfo: Workshop[] = [
-  {
-    title: 'Intro to Acroyoga Weekend',
-    location: 'The Nest Yoga Studio',
-    days: 'March 14-15, 2026',
-    address: '123 Main St, St. Louis, MO 63101',
-    lead: 'Daniel & Joelle',
-    description: 'A weekend intensive for beginners learning the foundations of acroyoga.',
-    buttonText: 'Register',
-    buttonUrl: 'https://example.com',
-    endDate: '2026-01-15',
-  },
-];
+export const workshopsInfo: Workshop[] = [];
 
 // Example event:
 // {
