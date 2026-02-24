@@ -20,7 +20,7 @@ const EventInfo = ({ event }: Props) => {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } catch (e) {
+    } catch {
       // Fallback to window.open
       window.open(buttonUrl, '_blank', 'noopener,noreferrer');
     }
