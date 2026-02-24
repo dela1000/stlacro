@@ -59,7 +59,10 @@ const Header = () => {
       </div>
 
       {/* Dropdown Menu */}
-      <div className={`lg:hidden duration-500 ease-in-out bg-blue-900 ${isOpen ? 'h-42' : 'h-0'}`}>
+      <div
+        className={`lg:hidden duration-500 ease-in-out bg-blue-900 overflow-hidden transition-all
+          ${isOpen ? 'max-h-80 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}
+      >
         {menuOptions.map((option, idx) => {
           return (
             <Link
