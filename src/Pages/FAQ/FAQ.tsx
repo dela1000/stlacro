@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { faqData } from 'src/constants/faqData';
 import PlusMinusIcon from 'src/components/PlusMinusIcon';
+import { faqData } from 'src/constants/faqData';
 
 const FAQ = () => {
   const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set([0]));
@@ -41,7 +41,7 @@ const FAQ = () => {
           <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
             <button
               onClick={() => toggle(index)}
-              className="w-full p-4 text-left flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors"
+              className="w-full p-4 text-left flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
             >
               <span className="font-semibold text-lg">{item.question}</span>
               <PlusMinusIcon isOpen={openIndexes.has(index)} />
