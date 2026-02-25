@@ -10,6 +10,7 @@ export const createSettings = (imagesLength: number) => ({
   arrows: true,
   variableWidth: true,
   centerMode: true,
+  accessibility: true,
   responsive: [
     {
       breakpoint: 1024,
