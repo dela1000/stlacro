@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { sendToDiscord } from 'src/constants/contactForm';
+import { sendToDiscord, MAX_NAME_LENGTH, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH } from 'src/constants/contactForm';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -10,8 +12,24 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setError(null);
+
+    if (formData.name.length > MAX_NAME_LENGTH) {
+      setError(`Name must be ${MAX_NAME_LENGTH} characters or less.`);
+      return;
+    }
+
+    if (formData.email.length > MAX_EMAIL_LENGTH || !EMAIL_REGEX.test(formData.email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    if (formData.message.length > MAX_MESSAGE_LENGTH) {
+      setError(`Message must be ${MAX_MESSAGE_LENGTH} characters or less.`);
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       await sendToDiscord(formData);
       setSubmitted(true);
@@ -62,6 +80,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    maxLength={MAX_NAME_LENGTH}
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
                   />
                 </div>
@@ -77,6 +96,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    maxLength={MAX_EMAIL_LENGTH}
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
                   />
                 </div>
@@ -91,6 +111,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    maxLength={MAX_MESSAGE_LENGTH}
                     rows={5}
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
                   />
