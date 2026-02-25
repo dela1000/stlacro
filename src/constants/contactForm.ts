@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5FqMZiDxO3aKz7t5e9vM9Zx8Y2Px6mPqYvK4T5R7Jm3w/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzL3EXlj4hZwBIKmUsDkwdKo7b1wmqIqUBpsLeI8UN3YU3G-xFxgNbpNi8Qapd1zu-/exec';
 
 export const sendToDiscord = async (data: { name: string; email: string; message: string }) => {
   const payload = {
