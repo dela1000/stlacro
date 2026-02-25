@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { sendToDiscord, MAX_NAME_LENGTH, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH } from 'src/constants/contactForm';
 
@@ -9,6 +9,28 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const emailTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (emailTimeoutRef.current) {
+      clearTimeout(emailTimeoutRef.current);
+    }
+
+    if (formData.email && !EMAIL_REGEX.test(formData.email)) {
+      emailTimeoutRef.current = setTimeout(() => {
+        setEmailError('Please enter a valid email address.');
+      }, 2000);
+    } else {
+      setEmailError(null);
+    }
+
+    return () => {
+      if (emailTimeoutRef.current) {
+        clearTimeout(emailTimeoutRef.current);
+      }
+    };
+  }, [formData.email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,7 +77,7 @@ const Contact = () => {
           {submitted ? (
             <div>
               <div className="text-green-600 font-semibold py-4">Thank you! Your message has been sent.</div>
-              <div className="flex flex-col gap-2 pt-4">
+              <div className="flex flex-col gap-2 pt-4 items-center">
                 <button onClick={() => setSubmitted(false)} className="text-gray-500 underline hover:text-gray-700 text-sm">
                   Send another message
                 </button>
@@ -99,6 +121,7 @@ const Contact = () => {
                     maxLength={MAX_EMAIL_LENGTH}
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
                   />
+                  {emailError && <div className="text-red-500 text-sm mt-1">{emailError}</div>}
                 </div>
 
                 <div>
@@ -119,7 +142,7 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !!emailError}
                   className="mt-2 py-2 px-4 bg-blue-900 text-white rounded hover:bg-blue-800 disabled:opacity-50"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
