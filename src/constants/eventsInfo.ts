@@ -6,6 +6,7 @@ export type Event = {
   lead: string;
   buttonText: string;
   buttonUrl: string;
+  info?: string;
 };
 
 export type Workshop = {
@@ -27,8 +28,10 @@ export const eventsInfo: Event[] = [
     days: 'Tuesdays 6:30 PM - 8:00 PM',
     address: '1419 Carroll St, St. Louis, MO 63104',
     lead: 'Joelle & Daniel',
-    buttonText: 'Learn more',
-    buttonUrl: 'https://stlouis.climbsoill.com/classes-yoga-power-plant/#:~:text=ACRO%20YOGA',
+    buttonText: 'Sign up here',
+    buttonUrl:
+      'https://app.rockgympro.com/b/widget/?a=offering&offering_guid=1f2f4d46dcb944879be518ed677ab63b&widget_guid=06b83d0ddad54d23bdf3338515e791df&course_guid=1b04770c58c8ff722255ae692805271d036f4291&mode=p&_gl=1*13mjniy*_ga*MTExNjI0NzAyNC4xNzcyMDQxNTkz*_ga_BTSPCJMNEC*czE3NzIwNDE1OTIkbzEkZzAkdDE3NzIwNDE1OTIkajYwJGwwJGgw',
+    info: '$16/class for non-members, free for CSI members. 10 punch yoga pass available to save some bucks for non-members',
   },
 ];
 

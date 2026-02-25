@@ -6,7 +6,7 @@ type Props = {
 };
 
 const EventInfo = ({ event }: Props) => {
-  const { location, locationUrl, days, address, lead, buttonText, buttonUrl } = event;
+  const { location, locationUrl, days, address, lead, buttonText, buttonUrl, info } = event;
 
   const openLink = () => {
     if (!buttonUrl) return;
@@ -25,7 +25,7 @@ const EventInfo = ({ event }: Props) => {
   };
 
   return (
-    <div className="lg:pb-10 pb-12 px-2">
+    <div className="lg:pb-10 pb-12 px-2 max-w-96">
       <div className="lg:flex  gap-1">
         <div className="flex justify-center lg:justify-start font-bold">Days:</div>
       </div>
@@ -60,6 +60,10 @@ const EventInfo = ({ event }: Props) => {
         <div className="flex justify-center lg:justify-start font-bold">With:</div>
       </div>
       <div className="flex justify-center lg:justify-start">{lead}</div>
+      <div className="lg:flex  gap-1">
+        <div className="flex justify-center lg:justify-start font-bold">Info:</div>
+      </div>
+      {info && <div className="pt-2 flex justify-center lg:justify-start">{info}</div>}
       {buttonText && (
         <div className="pt-6 flex justify-center lg:justify-start">
           <Button text={buttonText} hoverAnimation={true} onClick={openLink} />
