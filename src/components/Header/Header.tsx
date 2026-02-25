@@ -7,7 +7,7 @@ type MenuOption = {
   name: string;
 };
 
-const menuOptions: MenuOption[] = [{ name: 'home' }, { name: 'about' }, { name: 'FAQ' }, { name: 'conduct' }];
+const menuOptions: MenuOption[] = [{ name: 'home' }, { name: 'about' }, { name: 'FAQ' }, { name: 'contact' }, { name: 'conduct' }];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -61,7 +61,7 @@ const Header = () => {
       {/* Dropdown Menu */}
       <div
         className={`lg:hidden duration-500 ease-in-out bg-blue-900 overflow-hidden transition-all
-          ${isOpen ? 'max-h-80 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}
+          ${isOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}
       >
         {menuOptions.map((option, idx) => {
           return (

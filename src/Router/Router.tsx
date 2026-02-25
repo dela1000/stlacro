@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import About from 'src/Pages/About';
 import Conduct from 'src/Pages/Conduct';
+import Contact from 'src/Pages/Contact';
 import FAQ from 'src/Pages/FAQ';
 import Home from 'src/Pages/Home';
 
@@ -9,6 +10,7 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="/conduct" element={<Conduct />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="*" element={<Navigate to="/" replace />} />
