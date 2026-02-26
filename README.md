@@ -41,3 +41,7 @@ To update the Google Apps Script:
 3. Deploy a new version
 
 The script URL is stored in `src/constants/contactForm.ts`.
+
+Any pushed to `main` will deploy to the production site.
+
+Hosted on Netlify.

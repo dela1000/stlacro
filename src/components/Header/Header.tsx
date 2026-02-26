@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Socials from 'src/components/Socials';
 import useWindowDimensions from 'src/hooks/useWindowDimensions';
 
@@ -12,6 +12,7 @@ const menuOptions: MenuOption[] = [{ name: 'home' }, { name: 'about' }, { name: 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { width } = useWindowDimensions();
+  const location = useLocation();
 
   useEffect(() => {
     if (width > 1024 && isOpen === true) {
@@ -45,8 +46,14 @@ const Header = () => {
           {/* Web Menu */}
           <div className="hidden lg:flex gap-5 lg:gap-12 xl:gap-20 items-center">
             {menuOptions.map((option, idx) => {
+              const path = `/${option.name}`;
+              const isActive = location.pathname === path || (option.name === 'home' && location.pathname === '/');
               return (
-                <Link key={idx} to={`/${option.name}`} className="capitalize">
+                <Link
+                  key={idx}
+                  to={path}
+                  className={`capitalize ${isActive ? 'text-blue-900 font-bold underline underline-2 underline-blue-900' : ''}`}
+                >
                   {option.name}
                 </Link>
               );
@@ -64,12 +71,16 @@ const Header = () => {
           ${isOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}
       >
         {menuOptions.map((option, idx) => {
+          const path = `/${option.name}`;
+          const isActive = location.pathname === path || (option.name === 'home' && location.pathname === '/');
           return (
             <Link
               key={idx}
-              to={`/${option.name}`}
+              to={path}
               onClick={() => setIsOpen(false)}
-              className={`p-4 uppercase block duration-500 ease-in-out ${isOpen ? 'opacity-100 delay-200 text-white' : 'opacity-0'}`}
+              className={`p-4 uppercase block duration-500 ease-in-out ${isOpen ? 'opacity-100 delay-200 text-white' : 'opacity-0'} ${
+                isActive ? 'font-bold underline underline-2' : ''
+              }`}
             >
               {option.name}
             </Link>
