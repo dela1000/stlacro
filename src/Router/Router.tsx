@@ -4,6 +4,7 @@ import Conduct from 'src/Pages/Conduct';
 import Contact from 'src/Pages/Contact';
 import FAQ from 'src/Pages/FAQ';
 import Home from 'src/Pages/Home';
+import Leadership from 'src/Pages/Leadership';
 import Resources from 'src/Pages/Resources';
 
 const Router = () => {
@@ -14,6 +15,7 @@ const Router = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/conduct" element={<Conduct />} />
       <Route path="/faq" element={<FAQ />} />
+      <Route path="/leadership" element={<Leadership />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
