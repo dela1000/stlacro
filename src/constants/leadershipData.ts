@@ -24,7 +24,7 @@ export const leadershipData: Leader[] = [
     image: josh,
   },
   {
-    name: 'Joelle Fronzaglio (Fettuccine)',
+    name: 'Joelle Fettuccine (Fronzaglio)',
     role: 'Class Instructor',
     bio: 'Joelle specializes in teaching beginners and making AcroYoga approachable for everyone. Her patience and clear instruction have helped many students take their first flight. She bases and flies with equal skill, and her classes are always filled with laughter and encouragement.',
     image: joelle,
