@@ -7,7 +7,14 @@ type MenuOption = {
   name: string;
 };
 
-const menuOptions: MenuOption[] = [{ name: 'home' }, { name: 'about' }, { name: 'FAQ' }, { name: 'contact' }, { name: 'conduct' }];
+const menuOptions: MenuOption[] = [
+  { name: 'home' },
+  { name: 'about' },
+  { name: 'FAQ' },
+  { name: 'resources' },
+  { name: 'conduct' },
+  { name: 'contact' },
+];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
