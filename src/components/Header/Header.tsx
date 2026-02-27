@@ -10,8 +10,9 @@ type MenuOption = {
 const menuOptions: MenuOption[] = [
   { name: 'home' },
   { name: 'about' },
-  { name: 'FAQ' },
+  { name: 'leadership' },
   { name: 'resources' },
+  { name: 'FAQ' },
   { name: 'conduct' },
   { name: 'contact' },
 ];
