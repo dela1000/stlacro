@@ -1,6 +1,6 @@
 import daniel from 'src/assets/leaders/daniel.jpg';
 import joelle from 'src/assets/leaders/joelle.jpg';
-import josh from 'src/assets/leaders/josh.jpg';
+import josh from 'src/assets/leaders/Josh.jpg';
 import lisa from 'src/assets/leaders/lisa.jpg';
 
 export type Leader = {
