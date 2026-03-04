@@ -61,7 +61,7 @@ export const workshopsInfo: Workshop[] = [
     days: 'March 7, 14, 28, April 4, 11, 25, 2026',
     address: '4220 Duncan Ave Unit 103, St. Louis, MO 63110',
     lead: 'Kimberly Akuna',
-    info: 'Discovery Topics, Skills & drills, Acroyoga foundations, Static moves & flows, Intro to washing machines',
+    info: 'Discovery Topics, Skills & drills, Acroyoga foundations, Static moves & flows, Intro to washing machines. $150 per person or discount for registering in pairs $240/pair. No experience necessary.',
     buttonText: 'Register',
     buttonUrl: 'https://www.movebybjc.org/',
     endDate: '2026-03-25',
