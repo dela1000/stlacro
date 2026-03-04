@@ -16,7 +16,7 @@ export type Workshop = {
   days: string;
   address: string;
   lead: string;
-  description: string;
+  info: string;
   buttonText: string;
   buttonUrl: string;
   endDate: string;
@@ -54,7 +54,19 @@ export const jamsInfo: Event[] = [
   },
 ];
 
-export const workshopsInfo: Workshop[] = [];
+export const workshopsInfo: Workshop[] = [
+  {
+    title: 'Intro to AcroYoga',
+    location: 'MOVE by BJC',
+    days: 'March 7, 14, 28, April 4, 11, 25, 2026',
+    address: '4220 Duncan Ave Unit 103, St. Louis, MO 63110',
+    lead: 'Kimberly Akuna',
+    info: 'Discovery Topics, Skills & drills, Acroyoga foundations, Static moves & flows, Intro to washing machines',
+    buttonText: 'Register',
+    buttonUrl: 'https://www.movebybjc.org/',
+    endDate: '2026-03-25',
+  },
+];
 
 // Example event:
 // {
