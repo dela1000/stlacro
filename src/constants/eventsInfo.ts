@@ -64,7 +64,7 @@ export const workshopsInfo: Workshop[] = [
     info: 'Discovery Topics, Skills & drills, Acroyoga foundations, Static moves & flows, Intro to washing machines. $150 per person or discount for registering in pairs $240/pair. No experience necessary.',
     buttonText: 'Register',
     buttonUrl: 'https://www.movebybjc.org/',
-    endDate: '2026-03-25',
+    endDate: '2026-04-25',
   },
 ];
 
