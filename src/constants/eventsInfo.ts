@@ -42,7 +42,7 @@ export const jamsInfo: Event[] = [
     address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
     buttonText: 'Learn more',
-    buttonUrl: 'https://facebook.com/groups/stlacroyogaclub/',
+    buttonUrl: 'https://www.facebook.com/groups/StLAcroYogaClub/events',
   },
   {
     location: 'Tower Grove Park or Indoor Location (Weather Dependent)',
@@ -50,7 +50,7 @@ export const jamsInfo: Event[] = [
     address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
     buttonText: 'Learn more',
-    buttonUrl: 'https://facebook.com/groups/stlacroyogaclub/',
+    buttonUrl: 'https://www.facebook.com/groups/StLAcroYogaClub/events',
   },
 ];
 

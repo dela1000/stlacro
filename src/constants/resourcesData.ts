@@ -6,6 +6,12 @@ export type ResourceLink = {
 
 export const websitesData: ResourceLink[] = [
   {
+    name: 'STL Acroyoga Facebook Group',
+    url: 'https://www.facebook.com/groups/StLAcroYogaClub',
+    description:
+      'The main hub for the St. Louis AcroYoga community. Find event updates, connect with other practitioners, and share your acroyoga journey.',
+  },
+  {
     name: 'AcroYoga International',
     url: 'https://www.acroyoga.org/',
     description:
