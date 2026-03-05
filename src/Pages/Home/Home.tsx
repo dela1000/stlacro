@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import EventInfo from 'src/components/EventInfo';
 import { eventsInfo, jamsInfo, workshopsInfo } from 'src/constants/eventsInfo';
@@ -33,8 +33,8 @@ const Home = () => {
         </div>
       </div>
       <CarouselHolder ref={sliderRef} />
-      <div className="lg:flex justify-around px-6 lg:px-24 pb-12 pt-12 lg:pb-12">
-        <div>
+      <div className="flex flex-col lg:flex-row justify-around items-center lg:items-start px-6 lg:px-24 pb-12 pt-12 lg:pb-12">
+        <div className="px-4">
           <div className="flex justify-center lg:justify-start text-center">
             <div className="font-serif text-4xl">Classes</div>
           </div>
@@ -43,7 +43,7 @@ const Home = () => {
           ))}
         </div>
         {activeWorkshops.length > 0 && (
-          <div>
+          <div className="px-4">
             <div className="flex justify-center lg:justify-start text-center">
               <div className="font-serif text-4xl">Workshops</div>
             </div>
@@ -52,7 +52,7 @@ const Home = () => {
             ))}
           </div>
         )}
-        <div>
+        <div className="px-4">
           <div className="flex justify-center lg:justify-start text-center">
             <div className="font-serif text-4xl">Jams</div>
           </div>
