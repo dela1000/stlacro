@@ -27,7 +27,7 @@ export const eventsInfo: Event[] = [
     location: 'Climb So iLL at the Power Plant',
     days: 'Tuesdays 6:30 PM - 8:00 PM',
     address: '1419 Carroll St, St. Louis, MO 63104',
-    lead: 'Joelle & Daniel',
+    lead: 'Joelle',
     buttonText: 'Sign up here',
     buttonUrl:
       'https://app.rockgympro.com/b/widget/?a=offering&offering_guid=1f2f4d46dcb944879be518ed677ab63b&widget_guid=06b83d0ddad54d23bdf3338515e791df&course_guid=1b04770c58c8ff722255ae692805271d036f4291&mode=p&_gl=1*13mjniy*_ga*MTExNjI0NzAyNC4xNzcyMDQxNTkz*_ga_BTSPCJMNEC*czE3NzIwNDE1OTIkbzEkZzAkdDE3NzIwNDE1OTIkajYwJGwwJGgw',
@@ -45,9 +45,10 @@ export const jamsInfo: Event[] = [
     buttonUrl: 'https://www.facebook.com/groups/StLAcroYogaClub/events',
   },
   {
-    location: 'Tower Grove Park or Indoor Location (Weather Dependent)',
-    days: 'Wednesdays 6:00 PM - 8:00 PM',
-    address: '3606 Arsenal St, St. Louis, MO 63116',
+    location: 'Currently at the MOBOT Whitaker Festival at the Botanical Gardens, or Indoor Location (Weather Dependent)',
+    days: 'Wednesdays 6:30 PM - 9:00 PM',
+    address: '4344 Shaw Blvd, St. Louis, MO 63110',
+    // address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
     buttonText: 'Learn more',
     buttonUrl: 'https://www.facebook.com/groups/StLAcroYogaClub/events',

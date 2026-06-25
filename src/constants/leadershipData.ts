@@ -31,7 +31,7 @@ export const leadershipData: Leader[] = [
   },
   {
     name: 'Daniel De La Rosa',
-    role: 'Class Instructor, Jam Host',
+    role: 'Jam Host',
     bio: 'Daniel has been practicing AcroYoga for over 10 years and completed his teacher training with AcroYoga International in 2019. He is passionate about building community through movement and has helped hundreds of students all over the world discover the joy of basing and flying.',
     image: daniel,
   },
