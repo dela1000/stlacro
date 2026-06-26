@@ -5,7 +5,7 @@ import { sendToDiscord, MAX_NAME_LENGTH, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH } 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', subscribe: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +55,7 @@ const Contact = () => {
     try {
       await sendToDiscord(formData);
       setSubmitted(true);
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', message: '', subscribe: false });
     } catch (err) {
       console.error('Failed to send message:', err);
       setError('Failed to send message. Please try again or contact us directly.');
@@ -65,7 +65,8 @@ const Contact = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target as HTMLInputElement;
+    setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
   };
 
   return (
@@ -139,6 +140,18 @@ const Contact = () => {
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
                   />
                 </div>
+
+                <label htmlFor="subscribe" className="flex items-start gap-2 text-sm text-gray-700 text-left">
+                  <input
+                    type="checkbox"
+                    id="subscribe"
+                    name="subscribe"
+                    checked={formData.subscribe}
+                    onChange={handleChange}
+                    className="mt-1 h-4 w-4 accent-blue-900"
+                  />
+                  <span>Add me to the STL Acro newsletter to get updates on classes, jams, and workshops.</span>
+                </label>
 
                 <button
                   type="submit"
