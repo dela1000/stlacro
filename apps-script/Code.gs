@@ -1,156 +1,122 @@
 /**
  * STL Acro — contact form + newsletter backend (Google Apps Script web app).
  *
- * This script receives POSTs from the website (see src/constants/contactForm.ts).
- * There are two touch points, distinguished by the `type` field:
+ * Receives POSTs from the website (see src/constants/contactForm.ts). Two touch
+ * points, distinguished by the `type` field:
  *
- *   - type="contact"   → the Contact Us form. Posts the message to Discord.
- *                        If the visitor also checked the opt-in box
- *                        (subscribe=true), additionally adds them to Contacts.
- *   - type="newsletter"→ the landing-page signup. ONLY adds them to Contacts.
- *                        Does NOT post to Discord.
+ *   - type="contact"    → Contact Us form. Posts the message to Discord.
+ *                         If the visitor checked the opt-in box (subscribe=true),
+ *                         also adds them to Google Contacts.
+ *   - type="newsletter" → Landing-page signup. ONLY adds them to Google Contacts.
+ *                         Does NOT post to Discord.
  *
- * "Adds to Contacts" = creates a Google Contact (deduped by email) and applies
- * the "newsletter" label in the acro.stlouis@gmail.com account. (A Contacts
- * "label" is a USER_CONTACT_GROUP in the People API, so this uses your existing
- * label rather than a separate group.)
+ * "Adds to Google Contacts" = creates a contact (deduped by email) and applies
+ * the "newsletter" label in the account this script runs as. (A Contacts "label"
+ * is a USER_CONTACT_GROUP in the People API, so this reuses your existing label.)
  *
- * SETUP
- * -----
- * 1. Open the script editor at script.google.com while signed in as
- *    acro.stlouis@gmail.com (the contacts must land in that account).
- * 2. Set DISCORD_WEBHOOK_URL below to the same webhook the old script used.
- * 3. Services (left sidebar, "+") → add the "People API" advanced service.
- *    Its identifier must be `People`.
- * 4. Deploy → New deployment → type "Web app":
- *      - Execute as: Me (acro.stlouis@gmail.com)
- *      - Who has access: Anyone
- *    Copy the /exec URL into GOOGLE_SCRIPT_URL in src/constants/contactForm.ts
- *    (the URL there should already match if you redeploy the same project).
- * 5. The first run will prompt for authorization (contacts + external fetch).
+ * SETUP (in the new Google account)
+ * ---------------------------------
+ * 1. Open script.google.com signed in as the account that should own the
+ *    contacts, and paste this file in.
+ * 2. Services (left sidebar "+") → add "People API". Its identifier must be `People`.
+ * 3. Deploy → Manage deployments → New deployment → Web app:
+ *      Execute as: Me   |   Who has access: Anyone
+ *    Put the /exec URL into GOOGLE_SCRIPT_URL in src/constants/contactForm.ts.
+ * 4. First run prompts for authorization (external fetch + contacts).
  */
 
-// Discord webhook for Contact Us messages. Paste the URL the old script used.
-var DISCORD_WEBHOOK_URL = 'PASTE_EXISTING_DISCORD_WEBHOOK_URL_HERE';
-// Must match your existing Google Contacts label exactly (case-sensitive).
-// If no label with this name exists, the script creates it.
-var NEWSLETTER_GROUP_NAME = 'newsletter';
+const DISCORD_WEBHOOK_URL =
+  'https://discord.com/api/webhooks/1476284379075448995/h6V7MnYwkqstg4EaBwbhVk6NIlpnqsjgCTZ-dPe9gsuM8nZMe439Xgh92GC0DaCW5GEJ';
+
+// Must match your Google Contacts label exactly (case-sensitive). Created if missing.
+const NEWSLETTER_LABEL = 'newsletter';
 
 function doPost(e) {
-  try {
-    var p = (e && e.parameter) || {};
-    var type = (p.type || 'contact').toString();
-    var name = (p.name || '').toString().trim();
-    var email = (p.email || '').toString().trim();
-    var message = (p.message || '').toString().trim();
-    var subscribe = (p.subscribe || '').toString().toLowerCase() === 'true';
+  const p = (e && e.parameter) || {};
+  const type = p.type || 'contact';
+  const name = p.name || '';
+  const email = p.email || '';
+  const message = p.message || '';
+  const subscribe = String(p.subscribe).toLowerCase() === 'true';
 
-    if (!email) {
-      return json_({ ok: false, error: 'Missing email' });
-    }
-
-    // Only the Contact Us form posts to Discord. The newsletter signup never does.
-    if (type === 'contact') {
-      postToDiscord_(name, email, message);
-    }
-
-    // Add to Google Contacts when they opted in, or used the newsletter signup.
-    if (subscribe || type === 'newsletter') {
-      addNewsletterContact_(name, email);
-    }
-
-    return json_({ ok: true });
-  } catch (err) {
-    return json_({ ok: false, error: String(err) });
+  // Only the Contact Us form posts to Discord — never the newsletter signup.
+  if (type === 'contact') {
+    const content = `**New Contact Form Submission from stlacro.com**\n\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`;
+    UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify({ content: content }),
+      muteHttpExceptions: true,
+    });
   }
+
+  // Add to Google Contacts when they opted in, or used the newsletter signup.
+  if (email && (subscribe || type === 'newsletter')) {
+    addNewsletterContact_(name, email);
+  }
+
+  return ContentService.createTextOutput('OK');
 }
 
-/** Posts a Contact Us submission to the Discord webhook. */
-function postToDiscord_(name, email, message) {
-  var content =
-    '**New contact form message**\n' +
-    '**Name:** ' + (name || '(none)') + '\n' +
-    '**Email:** ' + email + '\n' +
-    '**Message:** ' + (message || '(none)');
-
-  UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify({ content: content }),
-    muteHttpExceptions: true,
-  });
-}
-
-/**
- * Creates a Google Contact (if one with this email doesn't already exist) and
- * ensures it carries the "newsletter" label.
- */
+/** Creates the contact if new, then applies the "newsletter" label. */
 function addNewsletterContact_(name, email) {
-  var groupResourceName = getOrCreateNewsletterGroup_();
+  const labelResourceName = getOrCreateLabel_();
 
-  // Look for an existing contact with this email so we don't create duplicates.
-  var existing = findContactByEmail_(email);
-  var resourceName;
-
+  const existing = findContactByEmail_(email);
+  let resourceName;
   if (existing) {
     resourceName = existing.resourceName;
   } else {
-    var created = People.People.createContact({
+    const created = People.People.createContact({
       names: name ? [{ givenName: name }] : [],
       emailAddresses: [{ value: email }],
     });
     resourceName = created.resourceName;
   }
 
-  // Apply the "newsletter" label (idempotent — re-adding is a no-op).
+  // Idempotent — re-adding an already-labeled contact is a no-op.
   People.ContactGroups.Members.modify(
     { resourceNamesToAdd: [resourceName] },
-    groupResourceName
+    labelResourceName
   );
 }
 
 /** Returns the resourceName of the "newsletter" label, creating it if needed. */
-function getOrCreateNewsletterGroup_() {
-  var resp = People.ContactGroups.list({ pageSize: 200 });
-  var groups = (resp && resp.contactGroups) || [];
-  for (var i = 0; i < groups.length; i++) {
-    if (groups[i].name === NEWSLETTER_GROUP_NAME) {
+function getOrCreateLabel_() {
+  const resp = People.ContactGroups.list({ pageSize: 200 });
+  const groups = (resp && resp.contactGroups) || [];
+  for (let i = 0; i < groups.length; i++) {
+    if (groups[i].name === NEWSLETTER_LABEL) {
       return groups[i].resourceName;
     }
   }
-  var created = People.ContactGroups.create({
-    contactGroup: { name: NEWSLETTER_GROUP_NAME },
+  const created = People.ContactGroups.create({
+    contactGroup: { name: NEWSLETTER_LABEL },
   });
   return created.resourceName;
 }
 
 /** Returns an existing contact matching the email, or null. */
 function findContactByEmail_(email) {
-  // searchContacts requires a warm-up call before it returns results reliably.
+  // searchContacts needs a warm-up call before it returns results reliably.
   People.People.searchContacts({ query: '', readMask: 'emailAddresses' });
   Utilities.sleep(300);
 
-  var resp = People.People.searchContacts({
+  const resp = People.People.searchContacts({
     query: email,
     readMask: 'emailAddresses',
     pageSize: 10,
   });
-  var results = (resp && resp.results) || [];
-  var target = email.toLowerCase();
-  for (var i = 0; i < results.length; i++) {
-    var person = results[i].person || {};
-    var emails = person.emailAddresses || [];
-    for (var j = 0; j < emails.length; j++) {
+  const results = (resp && resp.results) || [];
+  const target = email.toLowerCase();
+  for (let i = 0; i < results.length; i++) {
+    const person = results[i].person || {};
+    const emails = person.emailAddresses || [];
+    for (let j = 0; j < emails.length; j++) {
       if ((emails[j].value || '').toLowerCase() === target) {
         return person;
       }
     }
   }
   return null;
-}
-
-function json_(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
-    ContentService.MimeType.JSON
-  );
 }
