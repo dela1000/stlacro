@@ -1,32 +1,37 @@
 /**
  * STL Acro — contact form + newsletter backend (Google Apps Script web app).
  *
- * This script receives POSTs from the website (see src/constants/contactForm.ts)
- * and:
- *   1. Emails the team about contact-form submissions.
- *   2. When the visitor opts in (subscribe=true) — or submits the newsletter
- *      form — adds their name/email to Google Contacts and applies the
- *      "newsletter" label in the acro.stlouis@gmail.com account.
- *      (A Google Contacts "label" is a USER_CONTACT_GROUP in the People API,
- *      so this matches/uses your existing label rather than a separate group.)
+ * This script receives POSTs from the website (see src/constants/contactForm.ts).
+ * There are two touch points, distinguished by the `type` field:
+ *
+ *   - type="contact"   → the Contact Us form. Posts the message to Discord.
+ *                        If the visitor also checked the opt-in box
+ *                        (subscribe=true), additionally adds them to Contacts.
+ *   - type="newsletter"→ the landing-page signup. ONLY adds them to Contacts.
+ *                        Does NOT post to Discord.
+ *
+ * "Adds to Contacts" = creates a Google Contact (deduped by email) and applies
+ * the "newsletter" label in the acro.stlouis@gmail.com account. (A Contacts
+ * "label" is a USER_CONTACT_GROUP in the People API, so this uses your existing
+ * label rather than a separate group.)
  *
  * SETUP
  * -----
  * 1. Open the script editor at script.google.com while signed in as
  *    acro.stlouis@gmail.com (the contacts must land in that account).
- * 2. Services (left sidebar, "+") → add the "People API" advanced service.
+ * 2. Set DISCORD_WEBHOOK_URL below to the same webhook the old script used.
+ * 3. Services (left sidebar, "+") → add the "People API" advanced service.
  *    Its identifier must be `People`.
- * 3. Deploy → New deployment → type "Web app":
+ * 4. Deploy → New deployment → type "Web app":
  *      - Execute as: Me (acro.stlouis@gmail.com)
  *      - Who has access: Anyone
  *    Copy the /exec URL into GOOGLE_SCRIPT_URL in src/constants/contactForm.ts
  *    (the URL there should already match if you redeploy the same project).
- * 4. The first run will prompt for authorization (contacts + send email scopes).
+ * 5. The first run will prompt for authorization (contacts + external fetch).
  */
 
-// Where contact-form messages are emailed. Newsletter contacts are stored in
-// whichever account this script runs as (set "Execute as" above).
-var NOTIFY_EMAIL = 'acro.stlouis@gmail.com';
+// Discord webhook for Contact Us messages. Paste the URL the old script used.
+var DISCORD_WEBHOOK_URL = 'PASTE_EXISTING_DISCORD_WEBHOOK_URL_HERE';
 // Must match your existing Google Contacts label exactly (case-sensitive).
 // If no label with this name exists, the script creates it.
 var NEWSLETTER_GROUP_NAME = 'newsletter';
@@ -44,17 +49,12 @@ function doPost(e) {
       return json_({ ok: false, error: 'Missing email' });
     }
 
-    // Email the team for actual contact-form messages.
+    // Only the Contact Us form posts to Discord. The newsletter signup never does.
     if (type === 'contact') {
-      MailApp.sendEmail({
-        to: NOTIFY_EMAIL,
-        replyTo: email,
-        subject: 'STL Acro — new contact form message from ' + (name || email),
-        body: 'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message,
-      });
+      postToDiscord_(name, email, message);
     }
 
-    // Add to Google Contacts when they opted in (or used the newsletter form).
+    // Add to Google Contacts when they opted in, or used the newsletter signup.
     if (subscribe || type === 'newsletter') {
       addNewsletterContact_(name, email);
     }
@@ -63,6 +63,22 @@ function doPost(e) {
   } catch (err) {
     return json_({ ok: false, error: String(err) });
   }
+}
+
+/** Posts a Contact Us submission to the Discord webhook. */
+function postToDiscord_(name, email, message) {
+  var content =
+    '**New contact form message**\n' +
+    '**Name:** ' + (name || '(none)') + '\n' +
+    '**Email:** ' + email + '\n' +
+    '**Message:** ' + (message || '(none)');
+
+  UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify({ content: content }),
+    muteHttpExceptions: true,
+  });
 }
 
 /**
