@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import EventInfo from 'src/components/EventInfo';
+import Newsletter from 'src/components/Newsletter';
 import { eventsInfo, jamsInfo, workshopsInfo } from 'src/constants/eventsInfo';
 import useSetVisible from 'src/hooks/setVisible';
 import CarouselHolder from 'src/Pages/Home/CarouselHolder';
@@ -61,6 +62,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+      <Newsletter />
     </div>
   );
 };
