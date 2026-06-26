@@ -5,8 +5,10 @@
  * and:
  *   1. Emails the team about contact-form submissions.
  *   2. When the visitor opts in (subscribe=true) — or submits the newsletter
- *      form — adds their name/email to Google Contacts under a "Newsletter"
- *      label/group in the acro.stlouis@gmail.com account.
+ *      form — adds their name/email to Google Contacts and applies the
+ *      "newsletter" label in the acro.stlouis@gmail.com account.
+ *      (A Google Contacts "label" is a USER_CONTACT_GROUP in the People API,
+ *      so this matches/uses your existing label rather than a separate group.)
  *
  * SETUP
  * -----
@@ -25,7 +27,9 @@
 // Where contact-form messages are emailed. Newsletter contacts are stored in
 // whichever account this script runs as (set "Execute as" above).
 var NOTIFY_EMAIL = 'acro.stlouis@gmail.com';
-var NEWSLETTER_GROUP_NAME = 'Newsletter';
+// Must match your existing Google Contacts label exactly (case-sensitive).
+// If no label with this name exists, the script creates it.
+var NEWSLETTER_GROUP_NAME = 'newsletter';
 
 function doPost(e) {
   try {
@@ -63,7 +67,7 @@ function doPost(e) {
 
 /**
  * Creates a Google Contact (if one with this email doesn't already exist) and
- * ensures it belongs to the "Newsletter" contact group.
+ * ensures it carries the "newsletter" label.
  */
 function addNewsletterContact_(name, email) {
   var groupResourceName = getOrCreateNewsletterGroup_();
@@ -82,14 +86,14 @@ function addNewsletterContact_(name, email) {
     resourceName = created.resourceName;
   }
 
-  // Add the contact to the Newsletter group (idempotent — re-adding is a no-op).
+  // Apply the "newsletter" label (idempotent — re-adding is a no-op).
   People.ContactGroups.Members.modify(
     { resourceNamesToAdd: [resourceName] },
     groupResourceName
   );
 }
 
-/** Returns the resourceName of the "Newsletter" group, creating it if needed. */
+/** Returns the resourceName of the "newsletter" label, creating it if needed. */
 function getOrCreateNewsletterGroup_() {
   var resp = People.ContactGroups.list({ pageSize: 200 });
   var groups = (resp && resp.contactGroups) || [];
