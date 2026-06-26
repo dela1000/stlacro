@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxx9Du4ly2BIcTO_Xu8SnxohTHgrT5Umz-iZnGX92tZxrvari9i7jXEr3nd1oGubmYy/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxANAfYJ81k4JZf4rmCw-V5Lc_zWii2ikHR0fwodLD174noN08nCUVk4uD6266ApRx6tw/exec';
 
 export const MAX_NAME_LENGTH = 100;
 export const MAX_EMAIL_LENGTH = 100;
