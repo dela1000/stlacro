@@ -4,6 +4,8 @@ import type { PhotoImage, Section } from 'src/constants/images/types';
 import a1 from 'src/assets/images/acro/1.jpg';
 import a10 from 'src/assets/images/acro/10.jpg';
 import a11 from 'src/assets/images/acro/11.jpg';
+import a12 from 'src/assets/images/acro/12.png';
+import a13 from 'src/assets/images/acro/13.jpg';
 import a2 from 'src/assets/images/acro/2.jpg';
 import a3 from 'src/assets/images/acro/3.jpg';
 import a4 from 'src/assets/images/acro/4.jpg';
@@ -23,7 +25,7 @@ import fbb from 'src/assets/socials/fbb.png';
 import instab from 'src/assets/socials/instab.png';
 
 // Acro
-const acroImages: PhotoImage[] = [a4, a1, a3, a2, a5, a6, a7, a8, a9, a10, a11];
+const acroImages: PhotoImage[] = [a4, a1, a3, a2, a5, a6, a7, a8, a9, a10, a11, a12, a13];
 
 // Socials
 export const instagramw = instaw;
