@@ -45,10 +45,9 @@ export const jamsInfo: Event[] = [
     buttonUrl: 'https://www.facebook.com/groups/StLAcroYogaClub/events',
   },
   {
-    location: 'Currently at the MOBOT Whitaker Festival at the Botanical Gardens, or Indoor Location (Weather Dependent)',
-    days: 'Wednesdays 6:30 PM - 9:00 PM',
-    address: '4344 Shaw Blvd, St. Louis, MO 63110',
-    // address: '3606 Arsenal St, St. Louis, MO 63116',
+    location: 'Tower Grove Park or Indoor Location (Weather Dependent)',
+    days: 'Wednesdays 6:00 PM - 8:00 PM',
+    address: '3606 Arsenal St, St. Louis, MO 63116',
     lead: 'Josh & Lisa (Usually)',
     buttonText: 'Learn more',
     buttonUrl: 'https://www.facebook.com/groups/StLAcroYogaClub/events',
